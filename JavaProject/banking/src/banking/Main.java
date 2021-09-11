@@ -9,34 +9,41 @@ public class Main {
 	public static void main(String[] args) {
 		boolean run = true;
 		
-		while(run) {
-			System.out.println("=============================================");
-			System.out.println("1.계좌 생성 | 2.계좌 목록 | 3.예금 | 4.출금 | 5.종료");	
-			System.out.println("=============================================");
-			System.out.print("선택>");
-			
-			int selNum = scan.nextInt();
-			if(selNum == 1) {
-				createAccount();
+		try {
+			while(run) {
+				System.out.println("=============================================");
+				System.out.println("1.계좌 생성 | 2.계좌 목록 | 3.예금 | 4.출금 | 5.종료");	
+				System.out.println("=============================================");
+				System.out.print("선택>");
+				
+				int selNum = scan.nextInt();
+				if(selNum == 1) {
+					createAccount();
+				}
+				else if(selNum == 2) {
+					accountList();
+				}
+				else if(selNum == 3) {
+					deposit();
+				}
+				else if(selNum == 4) {
+					withdraw();
+				}
+				else if(selNum == 5) {
+					run = false;
+				}
+				else {
+					System.out.println("지원하지 않는 기능입니다.");
+				}
+				
 			}
-			else if(selNum == 2) {
-				accountList();
-			}
-			else if(selNum == 3) {
-				deposit();
-			}
-			else if(selNum == 4) {
-				withdraw();
-			}
-			else if(selNum == 5) {
-				run = false;
-			}
-			else {
-				System.out.println("지원하지 않는 기능입니다.");
-			}
-			
+		}catch(Exception e) {
+			System.out.println("잘못된 입력입니다.");
+		}finally {
+			scan.close();
 		}
 		System.out.println("프로그램 종료");
+		scan.close();
 		
 	}
 	
@@ -91,16 +98,28 @@ public class Main {
 		System.out.print("계좌 번호 : ");	
 		String ano = scan.next();
 		
-		System.out.print("입금액 : ");	
-		int money = scan.nextInt();
-		
 		Account account = findAccount(ano);
 		
 		if(account == null) {
 			System.out.println("없는 계좌 입니다.");
 		}
-		account.setBalance(account.getBalance() + money);
-		System.out.println("결과 : 입금을 성공했습니다.");
+		else {
+			while(true) {
+				System.out.print("입금액 : ");	
+				int money = scan.nextInt();
+				if(money <= 0) {
+					System.out.println("0보다 큰 금액을 입력하십시오.");
+				}
+				else {
+					account.setBalance(account.getBalance() + money);
+					System.out.println("결과 : 입금을 성공했습니다.");
+					break;
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 	// 계좌 검색
@@ -152,10 +171,5 @@ public class Main {
 		}
 		
 	}
-
-
-	
-
-	
 
 }
