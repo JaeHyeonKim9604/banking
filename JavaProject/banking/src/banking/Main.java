@@ -9,6 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		boolean run = true;
 		
+		try {
 		while(run) {
 			System.out.println("=============================================");
 			System.out.println("1.계좌 생성 | 2.계좌 목록 | 3.예금 | 4.출금 | 5.종료");	
@@ -34,7 +35,11 @@ public class Main {
 			else {
 				System.out.println("지원하지 않는 기능입니다.");
 			}
-			
+		}
+		}catch(Exception e) {
+			System.out.println("잘못된 입력입니다.");
+		}finally{
+			scan.close();
 		}
 		System.out.println("프로그램 종료");
 		
